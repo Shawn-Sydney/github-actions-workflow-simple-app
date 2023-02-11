@@ -80,7 +80,7 @@ jobs:
         with:
           action: deploy
           manifests: |
-            hello-world-deployment.yaml
+            kubernetes/hello-world-deployment.yaml
             kubernetes/hello-world-service.yaml
           images: |
             shawngithubactions.azurecr.io/hello-world-app:${{ github.sha }}
