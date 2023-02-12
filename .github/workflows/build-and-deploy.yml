@@ -1,4 +1,8 @@
 name: Build and Deploy to Azure Env
+
+env: 
+  AZURE_CONTAINER_REGISTRY : 'shawngithubactions.azurecr.io'
+
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
@@ -24,9 +28,9 @@ jobs:
           # Container registry username
           username: 'shawngithubactions' 
           # Container registry password
-          password: '78k9fCffRlw+4ADXCVHEHi+L7SHfCSb5tJlXBULCIG+ACRAcaqBb' 
+          password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
           # Container registry server url
-          login-server: 'shawngithubactions.azurecr.io'
+          login-server: ${{ env.AZURE_CONTAINER_REGISTRY }}
     
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -78,7 +82,7 @@ jobs:
       - name: envsubst-action
         uses: danielr1996/envsubst-action@1.1.0
         env:
-          MONGODB_URI: 'mongodb://shawngithubactions:LM0kbHvoXfm4f7p0v42x97iPBSRI9iQe47GZsH7Q6YIgQoQ0PA0xS0kmnsJV7blGRgIdtg6HbWnIACDb0ENwxQ==@shawngithubactions.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@shawngithubactions@'
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
           CONTAINER_NAME: hello-world-app:${{ github.sha }}
           AZURE_CONTAINER_REGISTRY: shawngithubactions.azurecr.io
         with:
